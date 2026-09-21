@@ -36,6 +36,18 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Firebase service account — NEVER commit
+scripts/serviceAccountKey.json
+serviceAccountKey.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI Artifacts
+.agents/
+extracted_*.json
+skills-lock.json
+
+# Test files
+test-image.jpg

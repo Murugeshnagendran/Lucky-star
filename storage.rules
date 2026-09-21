@@ -1,0 +1,36 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // ─── Admin: Full access to all storage paths ─────────────────────
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null &&
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role in ['admin', 'store_manager'];
+    }
+
+    // ─── Public: Read product, category, brand, and banner images ────
+    match /products/{allPaths=**} {
+      allow read: if true;
+    }
+
+    match /categories/{allPaths=**} {
+      allow read: if true;
+    }
+
+    match /brands/{allPaths=**} {
+      allow read: if true;
+    }
+
+    match /banners/{allPaths=**} {
+      allow read: if true;
+    }
+
+    // ─── Authenticated: Upload furniture reference images ─────────────
+    match /furniture-requests/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId
+                   && request.resource.size < 10 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+  }
+}

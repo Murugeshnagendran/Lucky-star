@@ -1,0 +1,124 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Helper Functions ──────────────────────────────────────────────
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuth() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'store_manager'];
+    }
+
+    function isOwner(uid) {
+      return isAuth() && request.auth.uid == uid;
+    }
+
+    // ─── Products ──────────────────────────────────────────────────────
+    // Public: read active products only
+    // Admin: full CRUD
+    match /products/{productId} {
+      allow read: if resource.data.status == 'active' || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ─── Categories ────────────────────────────────────────────────────
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ─── Brands ────────────────────────────────────────────────────────
+    match /brands/{brandId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ─── Users ─────────────────────────────────────────────────────────
+    // CRITICAL: Customers can NEVER change their own role
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow create: if isAuth()
+                    && request.auth.uid == uid
+                    && request.resource.data.role == 'customer';
+      allow update: if (isOwner(uid)
+                    && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['role'])))
+                    || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Wishlist (subcollection of users) ─────────────────────────────
+    match /users/{uid}/wishlist/{itemId} {
+      allow read, write: if isOwner(uid);
+    }
+
+    // ─── Product Enquiries ─────────────────────────────────────────────
+    // Guests can submit enquiries (no auth required for create)
+    match /productEnquiries/{enquiryId} {
+      allow create: if true;
+      allow read: if isAdmin()
+                  || (isAuth() && resource.data.customerId == request.auth.uid);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Furniture Requests ────────────────────────────────────────────
+    // Guests can submit requests (no auth required for create)
+    match /furnitureRequests/{requestId} {
+      allow create: if true;
+      allow read: if isAdmin()
+                  || (isAuth() && resource.data.customerId == request.auth.uid);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Inventory Logs ────────────────────────────────────────────────
+    // Admin only
+    match /inventoryLogs/{logId} {
+      allow read, write: if isAdmin();
+    }
+
+    // ─── Offers ────────────────────────────────────────────────────────
+    match /offers/{offerId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ─── Reviews ───────────────────────────────────────────────────────
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isAuth();
+      allow update, delete: if isAdmin();
+    }
+
+    // ─── Delivery Zones ────────────────────────────────────────────────
+    match /deliveryZones/{zoneId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ─── Banners ───────────────────────────────────────────────────────
+    match /banners/{bannerId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ─── Contact Messages ──────────────────────────────────────────────
+    // Anyone can submit (guest allowed)
+    match /contactMessages/{messageId} {
+      allow create: if true;
+      allow read: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ─── Store Settings ────────────────────────────────────────────────
+    // Public read (for storefront to display store info)
+    // Admin write
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
