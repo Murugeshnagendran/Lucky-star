@@ -22,6 +22,11 @@ export async function GET(
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
 
+    const { data: specs, error: specsError } = await supabase
+      .from('product_specifications')
+      .select('name, value')
+      .eq('product_id', p.id);
+
     const mapped = {
       id: p.id,
       name: p.name,
@@ -50,6 +55,7 @@ export async function GET(
       seoTitle: p.seo_title,
       seoKeywords: p.seo_keywords,
       seoDescription: p.seo_description,
+      specifications: specs || [],
       createdAt: p.created_at,
       updatedAt: p.updated_at
     };

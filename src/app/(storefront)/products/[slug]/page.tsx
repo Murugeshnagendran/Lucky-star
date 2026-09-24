@@ -221,7 +221,28 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                <div dangerouslySetInnerHTML={{ __html: product.description || '<p>No description provided.</p>' }} />
              )}
              {activeTab === 'specifications' && (
-               <div dangerouslySetInnerHTML={{ __html: (product as any).specifications || '<p>No specifications provided.</p>' }} />
+               <div>
+                 {product.specifications && product.specifications.length > 0 ? (
+                   <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                     <table className="w-full text-sm text-left text-gray-600">
+                       <tbody>
+                         {product.specifications.map((spec, i) => (
+                           <tr key={i} className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                             <td className="px-6 py-4 font-medium text-gray-900 border-b border-gray-100 w-1/3 md:w-1/4">
+                               {spec.name}
+                             </td>
+                             <td className="px-6 py-4 border-b border-gray-100">
+                               {spec.value}
+                             </td>
+                           </tr>
+                         ))}
+                       </tbody>
+                     </table>
+                   </div>
+                 ) : (
+                   <p>No specifications provided.</p>
+                 )}
+               </div>
              )}
           </div>
         </div>
