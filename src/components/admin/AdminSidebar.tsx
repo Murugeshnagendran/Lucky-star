@@ -41,9 +41,13 @@ export default function AdminSidebar({ isOpen = false, onClose }: AdminSidebarPr
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="p-4 border-b border-neutral-800 flex items-center justify-between">
+        <div className="p-4 border-b border-neutral-800 flex items-center justify-between bg-white">
           <div className="flex items-center gap-1.5">
-            <span className="text-xl font-black text-brand-red tracking-wider">LUCKY ★ STAR</span>
+            <img 
+              src="/images/lucky-star-logo.png" 
+              alt="Lucky Star" 
+              className="h-10 w-auto object-contain"
+            />
           </div>
           {onClose && (
             <button

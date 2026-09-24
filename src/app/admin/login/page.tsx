@@ -105,14 +105,11 @@ export default function AdminLoginPage() {
       <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full">
         {/* Lucky Star Branding */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-1 mb-2">
-            <span
-              className="text-3xl font-extrabold tracking-tight"
-              style={{ fontFamily: 'var(--font-heading)', color: '#C41E24' }}
-            >
-              LUCKY ★ STAR
-            </span>
-          </div>
+          <img 
+            src="/images/lucky-star-logo.png" 
+            alt="Lucky Star Home Appliances and Furnitures" 
+            className="h-12 w-auto object-contain mx-auto mb-4"
+          />
           <h1 className="text-xl font-semibold" style={{ color: '#2D2D2D' }}>Admin Login</h1>
           <p className="text-sm text-neutral-400 mt-1">Store management access only</p>
         </div>

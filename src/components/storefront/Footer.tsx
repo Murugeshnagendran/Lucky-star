@@ -35,13 +35,11 @@ export default function Footer() {
         {/* Column 1: About */}
         <div>
           <Link href="/" className="inline-block mb-4">
-            <div className="flex items-center text-xl md:text-2xl font-bold font-poppins text-white">
-              <span>LUCKY</span>
-              <svg className="w-5 h-5 mx-1 text-[#C41E24] fill-current" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <span>STAR</span>
-            </div>
+            <img 
+              src="/images/lucky-star-logo.png" 
+              alt="Lucky Star Home Appliances and Furnitures" 
+              className="h-12 w-auto object-contain bg-white px-2 py-1 rounded"
+            />
           </Link>
           <p className="text-[#C41E24] font-medium text-sm mb-4">
             All Brands Home Appliances & Customised Furnitures Available

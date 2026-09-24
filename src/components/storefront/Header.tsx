@@ -57,14 +57,12 @@ export default function Header() {
 
           {/* Logo */}
           <Link href="/" className="flex flex-col items-center flex-shrink-0">
-            <div className="flex items-center text-xl md:text-2xl font-bold font-poppins text-[#C41E24]">
-              <span>LUCKY</span>
-              <svg className="w-5 h-5 md:w-6 md:h-6 mx-1 text-yellow-500 fill-current" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <span>STAR</span>
-            </div>
-            <span className="text-[10px] md:text-xs text-[#2D2D2D] font-medium tracking-wide hidden md:block">
+            <img 
+              src="/images/lucky-star-logo.png" 
+              alt="Lucky Star Home Appliances and Furnitures" 
+              className="h-[45px] md:h-[60px] w-auto object-contain"
+            />
+            <span className="text-[10px] md:text-xs text-[#2D2D2D] font-medium tracking-wide hidden md:block mt-1">
               Home Appliances & Furnitures
             </span>
           </Link>
@@ -134,8 +132,12 @@ export default function Header() {
           <div className="fixed inset-0 bg-black/50" onClick={() => setMobileMenuOpen(false)} />
           <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl flex flex-col">
             <div className="p-4 flex items-center justify-between border-b border-gray-100">
-              <Link href="/" className="font-poppins font-bold text-xl text-[#2D2D2D]" onClick={() => setMobileMenuOpen(false)}>
-                Lucky <span className="text-[#C41E24]">Star</span>
+              <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+                <img 
+                  src="/images/lucky-star-logo.png" 
+                  alt="Lucky Star Home Appliances and Furnitures" 
+                  className="h-10 w-auto object-contain"
+                />
               </Link>
               <button onClick={() => setMobileMenuOpen(false)} className="text-gray-500 p-1">
                 <X size={24} />

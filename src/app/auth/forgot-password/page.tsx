@@ -62,14 +62,12 @@ export default function ForgotPasswordPage() {
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
         <div className="text-center mb-8">
           <Link href="/" className="inline-block">
-            <div className="flex items-center justify-center text-2xl font-bold font-poppins text-[#C41E24]">
-              <span>LUCKY</span>
-              <svg className="w-6 h-6 mx-1 text-yellow-500 fill-current" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-              <span>STAR</span>
-            </div>
-            <p className="text-xs text-neutral-500 mt-0.5">Home Appliances &amp; Furnitures</p>
+            <img 
+              src="/images/lucky-star-logo.png" 
+              alt="Lucky Star Home Appliances and Furnitures" 
+              className="h-12 w-auto object-contain mx-auto"
+            />
+            <p className="text-xs text-neutral-500 mt-2">Home Appliances &amp; Furnitures</p>
           </Link>
           <h2 className="mt-6 text-2xl font-bold text-gray-900">Reset Password</h2>
           <p className="mt-2 text-sm text-gray-600">
