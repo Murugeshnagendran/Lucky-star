@@ -3,9 +3,24 @@
 import React from 'react';
 import Link from 'next/link';
 
+import { useAuth } from '@/contexts/AuthContext';
+import { useWishlist } from '@/contexts/WishlistContext';
+import { Spinner } from '@/components/ui';
+
 export default function WishlistPage() {
-  const isLoggedIn = false; // Mock state
-  const hasItems = true; // Mock state
+  const { user, loading: authLoading } = useAuth();
+  const { wishlistItems } = useWishlist();
+
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
+
+  const isLoggedIn = !!user;
+  const hasItems = wishlistItems.length > 0;
 
   if (!isLoggedIn) {
     return (
@@ -34,8 +49,8 @@ export default function WishlistPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {/* Wishlist Items */}
-          {[1,2,3].map(i => (
-            <div key={i} className="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm flex flex-col">
+          {wishlistItems.map((productId, i) => (
+            <div key={productId} className="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm flex flex-col">
               <div className="aspect-square bg-gray-50 relative p-4 flex flex-col justify-between">
                 <button className="self-end p-2 text-gray-400 hover:text-red-500 bg-white rounded-full shadow-sm z-10 transition-colors">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
@@ -43,15 +58,15 @@ export default function WishlistPage() {
                 <div className="w-24 h-24 bg-gray-200 rounded-md mx-auto absolute inset-0 m-auto"></div>
               </div>
               <div className="p-4 flex flex-col flex-1">
-                <span className="text-xs text-gray-500 font-medium mb-1">Samsung</span>
+                <span className="text-xs text-gray-500 font-medium mb-1">Product</span>
                 <h3 className="font-medium text-[#2D2D2D] text-sm leading-tight mb-4 flex-1">
-                  Premium Refrigerator Model {i}
+                  Item ID: {productId.substring(0, 8)}...
                 </h3>
                 <div className="flex gap-2 mt-auto">
-                  <Link href={`/products/demo`} className="flex-1 text-center py-2 bg-[#C41E24] text-white text-xs font-semibold rounded-lg hover:bg-[#9B1B20] transition-colors">
+                  <Link href={`/products`} className="flex-1 text-center py-2 bg-[#C41E24] text-white text-xs font-semibold rounded-lg hover:bg-[#9B1B20] transition-colors">
                     View
                   </Link>
-                  <a href="https://wa.me/..." className="flex-1 text-center py-2 bg-[#25D366] text-white text-xs font-semibold rounded-lg hover:bg-[#20b858] transition-colors">
+                  <a href="https://wa.me/919629599265" className="flex-1 text-center py-2 bg-[#25D366] text-white text-xs font-semibold rounded-lg hover:bg-[#20b858] transition-colors">
                     WhatsApp
                   </a>
                 </div>
