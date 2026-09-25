@@ -3,8 +3,19 @@ import Link from 'next/link';
 import HomePageCategories from '@/components/HomePageCategories';
 
 export default function HomePage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Lucky Star Home Appliances & Furnitures',
+    url: 'https://luckystarhomeappliances.vercel.app/',
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero Section */}
       <section className="bg-[#C41E24] text-white py-20 px-6 relative overflow-hidden">
         {/* Decorative Stars */}

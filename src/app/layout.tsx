@@ -19,8 +19,16 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'Lucky Star Home Appliances & Furnitures',
+  title: {
+    template: '%s | Lucky Star Home Appliances & Furnitures',
+    default: 'Lucky Star Home Appliances & Furnitures',
+  },
   description: 'Your premier destination for home appliances and furnitures in Madurai. Discover products, check real-time stock availability, and enquire directly.',
+  applicationName: 'Lucky Star Home Appliances & Furnitures',
+  metadataBase: new URL('https://luckystarhomeappliances.vercel.app'),
+  openGraph: {
+    siteName: 'Lucky Star Home Appliances & Furnitures',
+  },
 };
 
 export default function RootLayout({
