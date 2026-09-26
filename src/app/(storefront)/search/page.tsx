@@ -43,7 +43,6 @@ function SearchResults() {
       setLoading(true);
       setError(null);
       try {
-        const searchTerm = `%${query.trim()}%`;
 
         // Fetch brands and categories for name matching
         const [brandsRes, catsRes] = await Promise.all([
@@ -56,19 +55,32 @@ function SearchResults() {
 
         // Find brand/category IDs whose names match the search query
         const lowerQuery = query.trim().toLowerCase();
+        const isShortQuery = lowerQuery.length <= 2;
+        const shortQueryRegex = new RegExp(`\\b${lowerQuery}\\b`, 'i');
+
         const matchingBrandIds = brands
-          .filter(b => b.name.toLowerCase().includes(lowerQuery))
+          .filter(b => isShortQuery ? shortQueryRegex.test(b.name) : b.name.toLowerCase().includes(lowerQuery))
           .map(b => b.id);
         const matchingCatIds = categories
-          .filter(c => c.name.toLowerCase().includes(lowerQuery))
+          .filter(c => isShortQuery ? shortQueryRegex.test(c.name) : c.name.toLowerCase().includes(lowerQuery))
           .map(c => c.id);
 
         // Build an OR filter for products
-        const orFilters: string[] = [
-          `name.ilike.${searchTerm}`,
-          `model_number.ilike.${searchTerm}`,
-          `sku.ilike.${searchTerm}`,
-        ];
+        const orFilters: string[] = [];
+        
+        if (isShortQuery) {
+          // Whole-word matching for short queries using Postgres word boundaries (\y)
+          const pattern = `\\y${lowerQuery}\\y`;
+          orFilters.push(`name.imatch.${pattern}`);
+          orFilters.push(`model_number.imatch.${pattern}`);
+          orFilters.push(`sku.imatch.${pattern}`);
+        } else {
+          // Normal partial match for longer queries
+          const searchTerm = `%${lowerQuery}%`;
+          orFilters.push(`name.ilike.${searchTerm}`);
+          orFilters.push(`model_number.ilike.${searchTerm}`);
+          orFilters.push(`sku.ilike.${searchTerm}`);
+        }
 
         if (matchingBrandIds.length > 0) {
           orFilters.push(`brand_id.in.(${matchingBrandIds.join(',')})`);
