@@ -8,6 +8,7 @@ import { Phone, Mail, Menu, Search, User, Heart, X } from 'lucide-react';
 export default function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   const navLinks = [
@@ -47,61 +48,84 @@ export default function Header() {
       <div className="bg-white border-b py-4 px-4 md:px-6 sticky top-0 z-40 shadow-sm md:static md:shadow-none">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           
-          {/* Mobile Menu Button */}
-          <button 
-            className="md:hidden text-[#2D2D2D]"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <Menu size={24} />
-          </button>
-
-          {/* Logo */}
-          <Link href="/" className="flex flex-col items-center flex-shrink-0">
-            <img 
-              src="/images/lucky-star-logo.png" 
-              alt="Lucky Star Home Appliances and Furnitures" 
-              className="h-[45px] md:h-[60px] w-auto object-contain"
-            />
-            <span className="text-[10px] md:text-xs text-[#2D2D2D] font-medium tracking-wide hidden md:block mt-1">
-              Home Appliances & Furnitures
-            </span>
-          </Link>
-
-          {/* Search Bar - Desktop */}
-          <div className="hidden md:flex flex-1 max-w-2xl mx-8">
-            <form onSubmit={handleSearch} className="w-full relative">
-              <input 
-                type="text" 
-                placeholder="Search for appliances, furniture, brands..." 
-                className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-[#C41E24] focus:ring-1 focus:ring-[#C41E24]"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button type="submit" className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-[#C41E24]">
-                <Search size={18} />
+          {mobileSearchOpen ? (
+            <div className="md:hidden flex flex-1 items-center w-full">
+              <form onSubmit={handleSearch} className="flex-1 relative mr-2">
+                <input 
+                  type="text" 
+                  autoFocus
+                  placeholder="Search for appliances, furniture, brands..." 
+                  className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-[#C41E24] focus:ring-1 focus:ring-[#C41E24] text-sm"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button type="submit" className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-[#C41E24]">
+                  <Search size={18} />
+                </button>
+              </form>
+              <button type="button" onClick={() => setMobileSearchOpen(false)} className="text-gray-500 p-2">
+                <X size={24} />
               </button>
-            </form>
-          </div>
+            </div>
+          ) : (
+            <>
+              {/* Mobile Menu Button */}
+              <button 
+                className="md:hidden text-[#2D2D2D]"
+                onClick={() => setMobileMenuOpen(true)}
+              >
+                <Menu size={24} />
+              </button>
 
-          {/* Search Icon - Mobile */}
-          <div className="md:hidden flex items-center">
-             <Link href="/search" className="text-[#2D2D2D] p-2">
-                <Search size={22} />
-             </Link>
-          </div>
+              {/* Logo */}
+              <Link href="/" className="flex flex-col items-center flex-shrink-0">
+                <img 
+                  src="/images/lucky-star-logo.png" 
+                  alt="Lucky Star Home Appliances and Furnitures" 
+                  className="h-[45px] md:h-[60px] w-auto object-contain"
+                />
+                <span className="text-[10px] md:text-xs text-[#2D2D2D] font-medium tracking-wide hidden md:block mt-1">
+                  Home Appliances & Furnitures
+                </span>
+              </Link>
 
-          {/* Actions */}
-          <div className="hidden md:flex items-center space-x-6">
-            <Link href="/wishlist" className="flex flex-col items-center text-[#2D2D2D] hover:text-[#C41E24] transition-colors relative">
-              <Heart size={22} />
-              <span className="text-xs mt-1">Wishlist</span>
-            </Link>
+              {/* Search Bar - Desktop */}
+              <div className="hidden md:flex flex-1 max-w-2xl mx-8">
+                <form onSubmit={handleSearch} className="w-full relative">
+                  <input 
+                    type="text" 
+                    placeholder="Search for appliances, furniture, brands..." 
+                    className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-[#C41E24] focus:ring-1 focus:ring-[#C41E24]"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <button type="submit" className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-[#C41E24]">
+                    <Search size={18} />
+                  </button>
+                </form>
+              </div>
 
-            <Link href="/account" className="flex flex-col items-center text-[#2D2D2D] hover:text-[#C41E24] transition-colors relative">
-              <User size={22} />
-              <span className="text-xs mt-1">Account</span>
-            </Link>
-          </div>
+              {/* Search Icon - Mobile */}
+              <div className="md:hidden flex items-center">
+                 <button type="button" onClick={() => setMobileSearchOpen(true)} className="text-[#2D2D2D] p-2">
+                    <Search size={22} />
+                 </button>
+              </div>
+
+              {/* Actions */}
+              <div className="hidden md:flex items-center space-x-6">
+                <Link href="/wishlist" className="flex flex-col items-center text-[#2D2D2D] hover:text-[#C41E24] transition-colors relative">
+                  <Heart size={22} />
+                  <span className="text-xs mt-1">Wishlist</span>
+                </Link>
+
+                <Link href="/account" className="flex flex-col items-center text-[#2D2D2D] hover:text-[#C41E24] transition-colors relative">
+                  <User size={22} />
+                  <span className="text-xs mt-1">Account</span>
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
