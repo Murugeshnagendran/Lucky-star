@@ -3,12 +3,30 @@ import Link from 'next/link';
 import HomePageCategories from '@/components/HomePageCategories';
 
 export default function HomePage() {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'Lucky Star Home Appliances & Furnitures',
-    url: 'https://luckystarhomeappliances.vercel.app/',
-  };
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Lucky Star Home Appliances & Furnitures',
+      alternateName: 'Lucky Star',
+      url: 'https://luckystarhomeappliances.vercel.app/',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'LocalBusiness',
+      name: 'Lucky Star Home Appliances & Furnitures',
+      alternateName: 'Lucky Star',
+      url: 'https://luckystarhomeappliances.vercel.app/',
+      image: 'https://luckystarhomeappliances.vercel.app/images/lucky-star-logo.png',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Madurai',
+        addressRegion: 'Tamil Nadu',
+        addressCountry: 'IN'
+      },
+      telephone: '+919629599265'
+    }
+  ];
 
   return (
     <div className="flex flex-col min-h-screen">
