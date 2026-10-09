@@ -35,19 +35,16 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       {/* Hero Section */}
-      <section className="bg-[#C41E24] text-white py-20 px-6 relative overflow-hidden">
-        {/* Decorative Stars */}
-        <div className="absolute top-10 right-10 opacity-20 transform rotate-12">
-           <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        </div>
-        <div className="absolute bottom-10 left-10 opacity-10 transform -rotate-12">
-           <svg width="200" height="200" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        </div>
+      <section className="bg-[#D13A41] text-white py-20 px-6 relative overflow-hidden">
         
+
         <div className="max-w-7xl mx-auto relative z-10 text-center flex flex-col items-center">
-          <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-6">
+          <h1 className="text-4xl md:text-6xl font-poppins font-bold mb-4">
             Welcome to Lucky Star
           </h1>
+          <h2 className="text-2xl md:text-4xl font-poppins font-semibold mb-6">
+            Make Your Home Paradise
+          </h2>
           <p className="text-lg md:text-2xl mb-10 max-w-3xl">
             Your Trusted Home Appliances & Furniture Store in Madurai
           </p>
